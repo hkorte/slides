@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Brief introduction to cryptography with interactive RSA demo</title>
+
+	<meta name="description" content="Brief introduction to cryptography with interactive RSA demo">
+	<meta name="author" content="Hannes Korte">
+
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+
+	<!-- <link rel="stylesheet" href="css/print/pdf.css"> -->
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/theme.css">
+
+	<!-- For syntax highlighting -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!--[if lt IE 9]>
+	<script src="lib/js/html5shiv.js"></script>    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+<section>
+	<h3 style="margin-bottom: 100px;">
+		Brief introduction to cryptography<br/>
+		<small>with</small>
+		<br/>interactive RSA demo
+	</h3>
+	<div>
+		Hannes Korte<br/>
+		<small>email@hkorte.com</small>
+	</div>
+	<div style="margin-top: 80px;">
+		<small>Algorithms & Data Challenges Berlin Meetup 2014-02-27</small>
+	</div>
+</section>
+
+<section>
+	<h3>Substitution ciphers</h3>
+	<h4 class="fragment">Caesar cipher</h4>
+	<ul>
+		<li class="fragment">Very old and very simple</li>
+		<li class="fragment">Shift letters in an alphabet</li>
+		<li class="fragment">Examples with key = 3:
+			<table>
+				<tr>
+					<td>Plaintext:</td>
+					<td style="font-family: monospace; font-size: 80%">ABCDEFGHIJKLMNOPQRSTUVWXYZ</td>
+				</tr>
+				<tr>
+					<td>Ciphertext:</td>
+					<td style="font-family: monospace; font-size: 80%">DEFGHIJKLMNOPQRSTUVWXYZABC</td>
+				</tr>
+			</table>
+			<table class="fragment">
+				<tr>
+					<td>Plaintext:</td>
+					<td style="font-family: monospace; font-size: 80%">the quick brown fox jumps over the lazy dog</td>
+				</tr>
+				<tr>
+					<td>Ciphertext:</td>
+					<td style="font-family: monospace; font-size: 80%">QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD</td>
+				</tr>
+			</table>
+		</li>
+		<li class="fragment">Vulnerable to frequency analysis attacks</li>
+	</ul>
+</section>
+
+<section>
+	<h3>Frequency analysis</h3>
+	<img src="http://upload.wikimedia.org/wikipedia/commons/4/41/English-slf.png"/>
+
+	<div>The shift in the distribution is the key of a caesar cipher</div>
+</section>
+
+<section>
+	<h3>Substitution ciphers (2)</h3>
+	<h4 class="fragment">Vigenère cipher</h4>
+	<ul>
+		<li class="fragment">First mention in the 16th century</li>
+		<li class="fragment">Combine several Caesar ciphers in sequence<br/>with different shift values</li>
+		<li class="fragment">
+			<table>
+				<tr>
+					<td>Plaintext:</td>
+					<td style="font-family: monospace; font-size: 80%">ATTACKATDAWN</td>
+				</tr>
+				<tr>
+					<td>Key:</td>
+					<td style="font-family: monospace; font-size: 80%">LEMONLEMONLE</td>
+				</tr>
+				<tr>
+					<td>Ciphertext:</td>
+					<td style="font-family: monospace; font-size: 80%">LXFOPVEFRNHR</td>
+				</tr>
+			</table>
+		</li>
+		<li class="fragment">Still vulnerable to frequency analysis attacks:<br/> find out the key length</li>
+	</ul>
+</section>
+
+<section>
+	<h3>Kerkhoffs' Principle</h3>
+	<blockquote cite="http://en.wikipedia.org/wiki/Kerckhoffs%27s_principle">
+		&ldquo;A cryptosystem should be secure even if everything about the system, except the key, is public knowledge.&rdquo;
+	</blockquote>
+</section>
+
+<section>
+	<div>Problem of every symmetric cipher:</div>
+	<div class="fragment" style="margin: 50px; font-size: larger;">How to get the key to the recipient?</div>
+	<ul>
+		<li class="fragment">Previously shared secret</li>
+		<li class="fragment">Common knowledge: date, etc.</li>
+		<li class="fragment">Codebooks</li>
+	</ul>
+</section>
+
+<section>
+	<h3>Asymmetric cryptography!</h3>
+	<ul>
+		<li class="fragment">Two keys: one is public, one is secret</li>
+		<li class="fragment">the public one for encryption, the secret one for decryption</li>
+		<li class="fragment">One-way function</li>
+		<li class="fragment">Slower than symmetric ciphers</li>
+		<li class="fragment">Usually used to transmit the key of a symmetric cipher
+			<div class="fragment"><span class="glyphicon glyphicon-arrow-right"></span> Hybrid cryptosystem</div>
+		</li>
+		<li class="fragment">1976: Diffie-Hellman key exchange</li>
+		<li class="fragment">1977: Ron Rivest, Adi Shamir and Leonard Adleman: RSA</li>
+		<li class="fragment">1984: ElGamal encryption system</li>
+	</ul>
+</section>
+
+<section>
+	<h3>RSA key generation</h3>
+	<ol>
+		<li>Choose two distinct prime numbers $p$ and $q$</li>
+		<li class="fragment">Compute $n = pq$</li>
+		<li class="fragment">Compute $\varphi(n) = \varphi(p)\varphi(q) = (p − 1)(q − 1)$</li>
+		<li class="fragment">Choose an integer $e$ such that<br/>$1 < e < \varphi(n)$ and $gcd(e, \varphi(n)) = 1$</li>
+		<li class="fragment">
+			Compute $d$ as the multiplicative inverse of $e$
+			<table>
+				<tr>
+					<td style="text-align: right;">$d$</td>
+					<td>$≡ e^{−1}$</td>
+					<td>$\pmod{\varphi(n)}$</td>
+				</tr>
+				<tr class="fragment">
+					<td style="text-align: right;">$e d$</td>
+					<td>$≡ 1$</td>
+					<td>$\pmod{\varphi(n)}$</td>
+				</tr>
+			</table>
+		</li>
+	</ol>
+</section>
+
+<section>
+	<h3>RSA trick</h3>
+	<ul style="list-style: none">
+		<li>Set message $\,m\,$ such that $\,0 \leq m \lt n$</li>
+		<li class="fragment">Encryption: $\,c = m^e \mod{n}$</li>
+		<li class="fragment">Decryption: $\,m = c^d \mod{n}$</li>
+		<li class="fragment">
+			<table>
+				<tr>
+					<td style="text-align: right;">$m$</td>
+					<td>$= (m^e)^d$</td>
+					<td>$\mod{n}$</td>
+				</tr>
+				<tr class="fragment">
+					<td style="text-align: right;"></td>
+					<td>$= m^{ed}$</td>
+					<td>$\mod{n}$</td>
+				</tr>
+				<tr class="fragment">
+					<td style="text-align: right;"></td>
+					<td>$= m^{1\mod{\varphi(n)}}$</td>
+					<td>$\mod{n}$</td>
+				</tr>
+				<tr class="fragment">
+					<td style="text-align: right;">$m$</td>
+					<td>$= m$</td>
+					<td></td>
+				</tr>
+			</table>
+		</li>
+	</ul>
+</section>
+
+<section>
+	<h3>RSA key generation demo</h3>
+	<ol>
+		<li>Choose two <span id="constraint_pqdistinct">distinct</span> <span id="constraint_pqprime">prime</span> numbers<br/>$p =$ <input
+				type="text" id="pvalue" value="3" size="1"/> and $q =$ <input type="text" id="qvalue" value="3" size="1"/>
+		</li>
+		<li>$n = pq =$ <span class="demovalue pspan"></span> $\cdot$ <span class="demovalue qspan"></span> $=$ <span
+				class="demovalue nspan"></span></li>
+		<li>
+			$\varphi(n) = \varphi(p) \cdot \varphi(q) = (p − 1)(q − 1)$<br/> $\varphi(n) = $ <span class="demovalue phipspan"></span>
+			$\cdot$ <span class="demovalue phiqspan"></span> $=$ <span class="demovalue phinspan"></span>
+		</li>
+		<li>Choose an integer $e =$ <input type="text" id="evalue" value="3" size="1"/>, such that<br/>
+			<table>
+				<tr>
+					<td>
+						$1 < e < \varphi(n)$
+					</td>
+					<td>and</td>
+					<td>$gcd(e, \varphi(n)) = 1$</td>
+				</tr>
+				<tr>
+					<td id="constraint_e">
+						$1 <$ <span class="demovalue espan"></span> $<$ <span class="demovalue phinspan"></span></td>
+					<td>and</td>
+					<td id="constraint_gcd">$gcd($<span class="demovalue espan"></span> $,$ <span class="demovalue phinspan"></span>$) =$
+						<span class="demovalue gcdephinspan"></span> <span id="constraint_gcd_msg">$\,\neq 1$</span>
+					</td>
+				</tr>
+			</table>
+		</li>
+		<li>
+			Determine $d$ as $d ≡ e^{−1} (mod\ \varphi(n)) = $ <span class="demovalue dspan"></span>
+
+			<table>
+				<tr>
+					<td>Public key:</td>
+					<td>$(n, e) = ($<span class="demovalue nspan"></span>$,\ $<span class="demovalue espan"></span>$)$</td>
+				</tr>
+				<tr>
+					<td>Private key:</td>
+					<td>$(n, d) = ($<span class="demovalue nspan"></span>$,\ $<span class="demovalue dspan"></span>$)$</td>
+				</tr>
+			</table>
+		</li>
+	</ol>
+</section>
+
+<section>
+	<section>
+		<h3>RSA encryption</h3>
+		<ol>
+			<li>Get recipient's public key $(n, e) = ($<span class="demovalue nspan"></span>$,\,$<span class="demovalue espan"></span>$)$
+			</li>
+			<li>Set message $\,m =$ <input type="text" id="mvalue" value="3" size="1"/>, such that <span
+					id="constraint_m">$0 \leq m \lt n$</span>
+			</li>
+			<li>
+				<table>
+					<tr>
+						<td>Compute ciphertext $\,c$</td>
+						<td>$= m^e \mod{n}$</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>$=\ $<span class="demovalue mspan"></span><sup><span class="demovalue espan"
+								style="font-size: 80%"></span></sup> $\mod{}$ <span class="demovalue nspan"></span></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>$=\ $<span class="demovalue cspan"></span></td>
+					</tr>
+				</table>
+			</li>
+		</ol>
+	</section>
+	<section>
+		<h3>RSA encryption</h3>
+		<ol>
+			<li>Get recipient's public key $(n, e) = ($<span class="demovalue nspan"></span>$,\,$<span class="demovalue espan"></span>$)$
+			</li>
+			<li>Set message $\,m =$ <span class="demovalue mspan"></span>
+			</li>
+			<li>
+				<table>
+					<tr>
+						<td>$c$</td>
+						<td>$= m^e \mod{n}$</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>$=\ $<span class="demovalue mspan"></span><sup><span class="demovalue espan"
+								style="font-size: 80%"></span></sup> $\mod{}$ <span class="demovalue nspan"></span></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>$=\ $<span class="demovalue mpowespan"></span> $\,-\,($<span
+								class="demovalue mpowedivnspan"></span>$\,\cdot\,$<span class="demovalue nspan"></span>$)$
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>$=\ $<span class="demovalue mpowespan"></span> $\,-\,$<span class="demovalue ntimesmpowedivnspan"></span></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>$=\ $<span class="demovalue cspan"></span></td>
+					</tr>
+				</table>
+			</li>
+		</ol>
+	</section>
+</section>
+
+<section>
+	<section>
+		<h3>RSA decryption</h3>
+		<ol>
+			<li>Take recipient's private key $(n, d) = ($<span class="demovalue nspan"></span>$,\,$<span class="demovalue dspan"></span>$)$
+			</li>
+			<li>Receive ciphertext $\,c =$ <span class="demovalue cspan"></span></li>
+			<li>
+				<table>
+					<tr>
+						<td>Compute message $\,m'$</td>
+						<td>$= c^d \mod{n}$</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>$=\ $<span class="demovalue cspan"></span><sup><span class="demovalue dspan"
+								style="font-size: 80%"></span></sup> $\mod{}$ <span class="demovalue nspan"></span></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>$=\ $<span class="demovalue m2span"></span></td>
+					</tr>
+				</table>
+			</li>
+		</ol>
+	</section>
+	<section>
+		<h3>RSA decryption</h3>
+		<ol>
+			<li>Take recipient's private key $(n, d) = ($<span class="demovalue nspan"></span>$,\,$<span class="demovalue dspan"></span>$)$
+			</li>
+			<li>Receive ciphertext $\,c =$ <span class="demovalue cspan"></span></li>
+			<li>
+				<table>
+					<tr>
+						<td>$m'$</td>
+						<td>$= c^d \mod{n}$</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>$=\ $<span class="demovalue cspan"></span><sup><span class="demovalue dspan"
+								style="font-size: 80%"></span></sup> $\mod{}$ <span class="demovalue nspan"></span></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>$=\ $<span class="demovalue cpowdspan"></span> $\,-\,($<span
+								class="demovalue cpowddivnspan"></span>$\,\cdot\,$<span class="demovalue nspan"></span>$)$
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>$=\ $<span class="demovalue cpowdspan"></span> $\,-\,$<span class="demovalue ntimescpowddivnspan"></span></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>$=\ $<span class="demovalue m2span"></span></td>
+					</tr>
+				</table>
+			</li>
+		</ol>
+	</section>
+</section>
+
+<section>
+	<h3>RSA signing</h3>
+	<ul>
+		<li>Sender:
+			<ol>
+				<li>Compute the hash $\,h = \text{hash}(m)$</li>
+				<li>Compute signature $\,s = h^d \mod{n}$</li>
+				<li>Send the signature $s$ together with the (possibly) encrypted message to the recipient</li>
+			</ol>
+		</li>
+		<li class="fragment">Recipient:
+			<ol>
+				<li>Compute the hash $\,h = \text{hash}(m)$<br/>(using the same hash function)</li>
+				<li>Reconstruct the hash from the signature $\,h' = s^e \mod{n}$</li>
+				<li>Verify that $\,h = h'$</li>
+			</ol>
+		</li>
+	</ul>
+</section>
+
+
+<section>
+	<div style="margin-bottom: 100px;" class="large">Thanks!</div>
+	<div style="margin-bottom: 100px;">
+		Hannes Korte<br/> <span style="font-size: smaller">email@hkorte.com</span>
+	</div>
+	<div id="references">Images and examples taken from:<br/> <a href="http://en.wikipedia.org/wiki/Caesar_cipher">http://en.wikipedia.org/wiki/Caesar_cipher</a><br/>
+		<a href="http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher</a><br/> <a
+				href="http://en.wikipedia.org/wiki/File:English-slf.png">http://en.wikipedia.org/wiki/File:English-slf.png</a><br/> <a
+				href="http://en.wikipedia.org/wiki/RSA_%28cryptosystem%29">http://en.wikipedia.org/wiki/RSA_%28cryptosystem%29</a><br/>
+	</div>
+</section>
+
+</div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+	// Full list of configuration options available here:
+	// https://github.com/hakimel/reveal.js#configuration
+	Reveal.initialize({
+		controls: true,
+		progress: true,
+		history: true,
+		center: true,
+
+		transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+		// Optional libraries used to extend on reveal.js
+		dependencies: [
+			{
+				src: 'lib/js/classList.js',
+				condition: function () {
+					return !document.body.classList;
+				}
+			},
+			{
+				src: 'plugin/markdown/marked.js',
+				condition: function () {
+					return !!document.querySelector('[data-markdown]');
+				}
+			},
+			{
+				src: 'plugin/markdown/markdown.js',
+				condition: function () {
+					return !!document.querySelector('[data-markdown]');
+				}
+			},
+			{
+				src: 'plugin/highlight/highlight.js',
+				async: true,
+				callback: function () {
+					hljs.initHighlightingOnLoad();
+				}
+			},
+			{
+				src: 'plugin/zoom-js/zoom.js',
+				async: true,
+				condition: function () {
+					return !!document.body.classList;
+				}
+			},
+			{
+				src: 'plugin/notes/notes.js',
+				async: true,
+				condition: function () {
+					return !!document.body.classList;
+				}
+			},
+			{
+				src: 'plugin/math/math.js',
+				async: true
+			}
+		]
+	});
+</script>
+
+<script src="js/jquery-2.0.3.js"></script>
+<script src="js/jsbn.js"></script>
+<script src="js/jsbn2.js"></script>
+<script src="js/customstuff.js"></script>
+
+</body>
+</html>
