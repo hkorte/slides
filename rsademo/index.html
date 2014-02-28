@@ -210,7 +210,7 @@
 	<h3>RSA key generation demo</h3>
 	<ol>
 		<li>Choose two <span id="constraint_pqdistinct">distinct</span> <span id="constraint_pqprime">prime</span> numbers<br/>$p =$ <input
-				type="text" id="pvalue" value="3" size="1"/> and $q =$ <input type="text" id="qvalue" value="3" size="1"/>
+				type="text" id="pvalue" value="3" size="1" maxlength="4"/> and $q =$ <input type="text" id="qvalue" value="3" size="1" maxlength="4"/>
 		</li>
 		<li>$n = pq =$ <span class="demovalue pspan"></span> $\cdot$ <span class="demovalue qspan"></span> $=$ <span
 				class="demovalue nspan"></span></li>
@@ -218,7 +218,7 @@
 			$\varphi(n) = \varphi(p) \cdot \varphi(q) = (p − 1)(q − 1)$<br/> $\varphi(n) = $ <span class="demovalue phipspan"></span>
 			$\cdot$ <span class="demovalue phiqspan"></span> $=$ <span class="demovalue phinspan"></span>
 		</li>
-		<li>Choose an integer $e =$ <input type="text" id="evalue" value="3" size="1"/>, such that<br/>
+		<li>Choose an integer $e =$ <input type="text" id="evalue" value="3" size="1" maxlength="4"/>, such that<br/>
 			<table>
 				<tr>
 					<td>
@@ -260,7 +260,7 @@
 		<ol>
 			<li>Get recipient's public key $(n, e) = ($<span class="demovalue nspan"></span>$,\,$<span class="demovalue espan"></span>$)$
 			</li>
-			<li>Set message $\,m =$ <input type="text" id="mvalue" value="3" size="1"/>, such that <span
+			<li>Set message $\,m =$ <input type="text" id="mvalue" value="3" size="1" maxlength="4"/>, such that <span
 					id="constraint_m">$0 \leq m \lt n$</span>
 			</li>
 			<li>
