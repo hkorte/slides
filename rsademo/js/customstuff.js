@@ -47,6 +47,8 @@
 		return t;
 	};
 
+	var maxValue = 10000; // ignore input values larger than that to avoid browser problems.
+
 	var updateValues = function () {
 		var pintval = parseInt($("#pvalue").val());
 		var qintval = parseInt($("#qvalue").val());
@@ -55,20 +57,23 @@
 		if (isNaN(pintval) || isNaN(qintval) || isNaN(eintval) || isNaN(mintval)) {
 			return;
 		}
-		var p = new BigInteger(parseInt($("#pvalue").val()));
-		var q = new BigInteger(parseInt($("#qvalue").val()));
+		if (pintval > maxValue || qintval > maxValue || eintval > maxValue || mintval > maxValue) {
+			return;
+		}
+		var p = new BigInteger(pintval);
+		var q = new BigInteger(qintval);
 		var pqprimes = p.isProbablePrime() && q.isProbablePrime();
 		if (pqprimes) {
 			var n = new BigInteger(p * q);
 			var phiP = p - 1;
 			var phiQ = q - 1;
 			var phiN = phiP * phiQ;
-			var e = parseInt($("#evalue").val());
+			var e = eintval;
 			if (e > 0) {
 				var gcdEphiN = gcd(e, phiN);
 				if (gcdEphiN == 1) {
 					var d = inverse(e, phiN);
-					var m = new BigInteger(parseInt($("#mvalue").val()));
+					var m = new BigInteger(mintval);
 					if (0 <= m.intValue() && m.intValue() < n.intValue()) {
 						var c = m.modPow(new BigInteger(e), n);
 						var m2 = c.modPow(new BigInteger(d), n);
@@ -132,7 +137,7 @@
 		}
 
 		// constraint: 0≤m<n
-		if (0 <= m.intValue() && m.intValue() < n.intValue()) {
+		if (m != undefined && 0 <= m.intValue() && m.intValue() < n.intValue()) {
 			$("#constraint_m").removeClass("alert");
 		} else {
 			$("#constraint_m").addClass("alert");
