@@ -69,7 +69,7 @@
 				if (gcdEphiN == 1) {
 					var d = inverse(e, phiN);
 					var m = new BigInteger(parseInt($("#mvalue").val()));
-					if (0 <= m && m < n) {
+					if (0 <= m.intValue() && m.intValue() < n.intValue()) {
 						var c = m.modPow(new BigInteger(e), n);
 						var m2 = c.modPow(new BigInteger(d), n);
 						var mPowE = m.pow(new BigInteger(e));
@@ -132,7 +132,7 @@
 		}
 
 		// constraint: 0≤m<n
-		if (0 <= m && m < n) {
+		if (0 <= m.intValue() && m.intValue() < n.intValue()) {
 			$("#constraint_m").removeClass("alert");
 		} else {
 			$("#constraint_m").addClass("alert");
