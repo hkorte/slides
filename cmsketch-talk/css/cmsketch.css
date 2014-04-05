@@ -1,0 +1,20 @@
+#demosketch {
+	margin: 1px;
+}
+
+#demosketch td:not(.hashfct) {
+	background-color: rgba(0,0,0,0.1);
+	font-family:cursive;
+	padding: 5px;
+	text-align: center;
+	width: 100px;
+	border: 2px solid transparent;
+}
+
+#demosketch td.hashfct {
+	background-color: transparent;
+}
+
+.topmargin {
+	 margin-top: 1ex !important;
+}
