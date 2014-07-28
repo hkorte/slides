@@ -167,7 +167,7 @@
 							.appendTo($resultDiv);
 					}
 				});
-				var esListIndicesUrl = esUrl.endsWith("/") ? esUrl + "_aliases" : esUrl + "/_aliases";
+				var esListIndicesUrl = esUrl + "_aliases";
 				$.ajax({
 					url: esListIndicesUrl,
 					type: "GET",
@@ -210,7 +210,7 @@
 							.appendTo($resultDiv);
 					}
 				});
-				var kibanaDashboardsSearchUrl = esUrl.endsWith("/") ? esUrl + kibanaIndex : esUrl + "/" + kibanaIndex + "/dashboard/_search";
+				var kibanaDashboardsSearchUrl = esUrl + kibanaIndex + "/dashboard/_search";
 				$.ajax({
 					url: kibanaDashboardsSearchUrl,
 					type: "GET",
