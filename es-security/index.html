@@ -385,7 +385,7 @@
 			<form action="http://localhost:9200/_bulk" method="post"
 					target="iframeCreateDocumentBulk" enctype="text/plain">
 				<input type="hidden" name='{"index":{"_index":"te'
-						value='st","_type":"doc","_id":"1"}}&#10;{"hey":"there"}'/>
+						value='st","_type":"doc","_id":"1"}}&#10;{"hey":"there"}&#10;'/>
 				<input type="submit" value="Create document"/>
 			</form>
 		</li>
@@ -417,7 +417,7 @@
 			<form action="http://localhost:9200/_bulk" method="post"
 					target="iframeDeleteDocumentBulk" enctype="text/plain">
 				<input type="hidden" name='{"delete":{"_index":"te'
-						value='st","_type":"doc","_id":"1"}}'/>
+						value='st","_type":"doc","_id":"1"}}&#10;'/>
 				<input type="submit" value="Delete document"/>
 			</form>
 		</li>
@@ -465,13 +465,13 @@
 						<form action="http://localhost:9200/_bulk" method="post"
 							target="kibanaWriteOnlyTestFrame" enctype="text/plain">
 							<input type="hidden" name='{"index":{"_index":"te'
-									value='st","_type":"unwantedDoc","_id":"1"}}&#10;{"hey":"there","date":"2014-07-29"}'/>
+									value='st","_type":"unwantedDoc","_id":"1"}}&#10;{"hey":"there","date":"2014-07-29"}&#10;'/>
 							<input type="submit" value="Create document"/>
 						</form>
 						<form action="http://localhost:9200/_bulk" method="post"
 								target="kibanaWriteOnlyTestFrame" enctype="text/plain">
 							<input type="hidden" name='{"delete":{"_index":"te'
-									value='st","_type":"unwantedDoc","_id":"1"}}'/>
+									value='st","_type":"unwantedDoc","_id":"1"}}&#10;'/>
 							<input type="submit" value="Delete document"/>
 						</form>
 						<form action="http://localhost:9200/_shutdown" method="post"
