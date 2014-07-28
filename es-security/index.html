@@ -300,10 +300,10 @@
 		</li>
 		<li class="fragment">What do you think?</li>
 		<li class="fragment">Well... Try it:
+			<iframe style="float: right;" name="iframeShutdownResponse" class="esResponse"></iframe>
 			<form action="http://localhost:9200/_shutdown" method="post" target="iframeShutdownResponse">
 				<input type="submit" value="Shutdown Elasticsearch"/>
 			</form>
-			<iframe name="iframeShutdownResponse"></iframe>
 		</li>
 	</ul>
 </section>
@@ -321,7 +321,7 @@
 			</div>
 		</li>
 		<li class="fragment">Try it:
-			<iframe style="float: right;" name="iframeCreateDocument"></iframe>
+			<iframe style="float: right;" name="iframeCreateDocument" class="esResponse"></iframe>
 			<form action="http://localhost:9200/unwanted/docs/" method="post" target="iframeCreateDocument">
 				<input type="hidden" name='{"hey":"this is' value='unexpected"}'/>
 				<input type="submit" value="Create document"/>
@@ -349,7 +349,7 @@
 			</div>
 		</li>
 		<li class="fragment">Try it:
-			<iframe style="float: right;" name="iframeCreateDocumentTextPlain"></iframe>
+			<iframe style="float: right;" name="iframeCreateDocumentTextPlain" class="esResponse"></iframe>
 			<form action="http://localhost:9200/unwanted/docs/" method="post"
 					target="iframeCreateDocumentTextPlain" enctype="text/plain">
 				<input type="hidden" name='{"hey":"this is' value='unexpected"}'/>
@@ -381,7 +381,7 @@
 			</div>
 		</li>
 		<li class="fragment">Try it:
-			<iframe style="float: right;" name="iframeCreateDocumentBulk"></iframe>
+			<iframe style="float: right;" name="iframeCreateDocumentBulk" class="esResponse"></iframe>
 			<form action="http://localhost:9200/_bulk" method="post"
 					target="iframeCreateDocumentBulk" enctype="text/plain">
 				<input type="hidden" name='{"index":{"_index":"te'
@@ -413,7 +413,7 @@
 			</div>
 		</li>
 		<li class="fragment">Do it:
-			<iframe style="float: right;" name="iframeDeleteDocumentBulk"></iframe>
+			<iframe style="float: right;" name="iframeDeleteDocumentBulk" class="esResponse"></iframe>
 			<form action="http://localhost:9200/_bulk" method="post"
 					target="iframeDeleteDocumentBulk" enctype="text/plain">
 				<input type="hidden" name='{"delete":{"_index":"te'
@@ -480,7 +480,7 @@
 						</form>
 					</td>
 					<td style="padding-top: 1em;">
-						<iframe name="kibanaWriteOnlyTestFrame"></iframe>
+						<iframe name="kibanaWriteOnlyTestFrame" class="esResponse"></iframe>
 					</td>
 				</tr>
 			</table>
