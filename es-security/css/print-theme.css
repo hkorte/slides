@@ -1,0 +1,7 @@
+aside.controls {
+	display: none !important;
+}
+
+table#featureselection tr td {
+	font-size: 60% !important;
+}
