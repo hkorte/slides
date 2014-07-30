@@ -361,4 +361,13 @@
 		$("#mvelTestEsUrlCopy").text(esUrl.endsWith("/") ? esUrl : esUrl + "/");
 	});
 
+	$("#netcatSample").hover(function() {
+		var $popup = $("<div id=\"netcatSampleInfo\"/>");
+		$popup.append("Depending on your netcat flavor the \"-p\" might be needed or not to set the port number");
+		$popup.css("top", $(this).outerHeight() + "px");
+		$("#netcatSample").append($popup);
+	}, function() {
+		$("#netcatSampleInfo").remove();
+	})
+
 })();

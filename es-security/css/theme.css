@@ -243,6 +243,10 @@ div.kibanaTest > input[type=text] {
     /*display: inline-block;*/
 /*}*/
 
+div#mvelTestDiv {
+
+}
+
 div#mvelTestDiv input {
     font-size: 100%;
 }
@@ -277,4 +281,23 @@ div.clusterGraphic .server:hover {
 #references {
     font-size: 70%;
     line-height: normal;
+}
+
+#netcatSample {
+    font-family: monospace;
+    position: relative;
+    display: inline-block;
+}
+
+#netcatSampleInfo {
+    position: absolute;
+    font-size: 50%;
+    line-height: normal;
+    background: black;
+    background: rgba(0,0,0,0.9);
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px black;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
 }
