@@ -523,7 +523,7 @@
 		</li>
 		<li class="fragment">MVEL is not sandboxed!
 			<ul>
-				<li>The script the same system privileges as the user runing Elasticsearch</li>
+				<li>The script has the same system privileges as the user running Elasticsearch</li>
 			</ul>
 		</li>
 	</ul>
@@ -609,7 +609,7 @@
 
 <section>
 	<h3>Conclusions</h3>
-	<div>You should never have direct access to Elasticsearch from the machine you use for surfing</div>
+	<div>You should never have direct HTTP access to Elasticsearch from the machine you use for surfing</div>
 	<div class="fragment" style="margin-top: 1em;">Block all unnecessary GET und POST requests in an ES proxy</div>
 	<div class="fragment" style="margin-top: 1em;">
 		And the obvious things:<br/>
